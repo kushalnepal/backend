@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"tsup --watch\" \"nodemon dist/index.js\"",
     "start": "node dist/index.js",
-    "build":"tsup"
+    "build": "tsup"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +15,9 @@
     "@prisma/client": "^6.1.0",
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",

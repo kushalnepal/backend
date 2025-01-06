@@ -1,9 +1,17 @@
 import { PrismaClient } from "@prisma/client";
+import axios from "axios";
 import express from "express";
 import { errormiddleware } from "./features/Middleware/errors";
 import mainRouter from "./features/routes";
 import { Port } from "./secret";
+
 const app = express();
+const cors = require("cors");
+
+app.use(cors());
+
+app.use(axios);
+
 app.use(express.json());
 
 export const prisma = new PrismaClient();

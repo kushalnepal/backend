@@ -1,6 +1,7 @@
 'use strict';
 
 var client = require('@prisma/client');
+var axios = require('axios');
 var express = require('express');
 var dotnet = require('dotenv');
 var jwt = require('jsonwebtoken');
@@ -27,11 +28,17 @@ function _interopNamespace(e) {
   return Object.freeze(n);
 }
 
+var axios__default = /*#__PURE__*/_interopDefault(axios);
 var express__default = /*#__PURE__*/_interopDefault(express);
 var dotnet__default = /*#__PURE__*/_interopDefault(dotnet);
 var jwt__namespace = /*#__PURE__*/_interopNamespace(jwt);
 
-// src/index.ts
+var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+}) : x)(function(x) {
+  if (typeof require !== "undefined") return require.apply(this, arguments);
+  throw Error('Dynamic require of "' + x + '" is not supported');
+});
 
 // src/features/Middleware/errors.ts
 var errormiddleware = (error, req, res, next) => {
@@ -375,6 +382,9 @@ var routes_default4 = mainRouter;
 
 // src/index.ts
 var app = express__default.default();
+var cors = __require("cors");
+app.use(cors());
+app.use(axios__default.default);
 app.use(express__default.default.json());
 var prisma = new client.PrismaClient();
 app.use("/api", routes_default4);
