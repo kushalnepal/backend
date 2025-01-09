@@ -199,7 +199,7 @@ loginRouter.post("/login", ErrorHandler(loginController));
 var routes_default2 = loginRouter;
 var Signup = async (req, res) => {
   SignUpSchema.parse(req.body);
-  const { email, password, name } = req.body;
+  const { email, password, name, role } = req.body;
   const user = await prisma.user.findFirst({
     where: { email }
   });
@@ -210,7 +210,8 @@ var Signup = async (req, res) => {
     data: {
       email,
       password: bcrypt.hashSync(password, 10),
-      name
+      name,
+      role
     }
   });
   return res.send(Userdata);
@@ -233,7 +234,6 @@ var AdminMiddleware = (req, res, next) => {
 
 // src/features/products/CreateProduct/controller.ts
 var getProducts = async (req, res) => {
-  req.body;
   const createProducts = await prisma.product.create({
     data: {
       ...req.body,

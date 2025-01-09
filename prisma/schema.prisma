@@ -1,14 +1,16 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongodb"]
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+//In mongo db model point to collection
 model user {
-  id        String   @id @default(cuid())
+  id        String   @id @default(cuid()) @map("_id") @db.ObjectId()
   name      String
   email     String   @unique
   password  String
@@ -18,11 +20,11 @@ model user {
 }
 
 model product {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid()) @map("_id")
   name        String
-  price       Decimal
+  price       Float
   tags        String
-  description String   @db.Text
+  description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

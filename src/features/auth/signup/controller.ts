@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 
 export const Signup = async (req: Request, res: Response): Promise<any> => {
   SignUpSchema.parse(req.body);
-  const { email, password, name } = req.body;
+  const { email, password, name, role } = req.body;
   const user = await prisma.user.findFirst({
     where: { email: email },
   });
@@ -19,6 +19,7 @@ export const Signup = async (req: Request, res: Response): Promise<any> => {
       email,
       password: hashSync(password, 10),
       name,
+      role,
     },
   });
   // console.log("user created", Userdata);
