@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 
 export const Signup = async (req: Request, res: Response): Promise<any> => {
   SignUpSchema.parse(req.body);
-  const { email, password, name, role } = req.body;
+  const { name, email, password, role } = req.body;
   const user = await prisma.user.findFirst({
     where: { email: email },
   });

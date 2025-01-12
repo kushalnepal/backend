@@ -13,7 +13,7 @@ export const loginController = async (
   res: Response
 ): Promise<any> => {
   SignUpSchema.parse(req.body);
-  const { email, password, name } = req.body;
+  const { email, password } = req.body;
 
   if (!email || !password) {
     throw new BadRequest(

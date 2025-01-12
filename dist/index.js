@@ -1,7 +1,6 @@
 'use strict';
 
 var client = require('@prisma/client');
-var axios = require('axios');
 var express = require('express');
 var dotnet = require('dotenv');
 var jwt = require('jsonwebtoken');
@@ -28,7 +27,6 @@ function _interopNamespace(e) {
   return Object.freeze(n);
 }
 
-var axios__default = /*#__PURE__*/_interopDefault(axios);
 var express__default = /*#__PURE__*/_interopDefault(express);
 var dotnet__default = /*#__PURE__*/_interopDefault(dotnet);
 var jwt__namespace = /*#__PURE__*/_interopNamespace(jwt);
@@ -157,11 +155,12 @@ var NotFoundException = class extends HttpException {
 var SignUpSchema = zod.z.object({
   name: zod.z.string().min(3).max(16),
   email: zod.z.string().email("Invalid email"),
-  password: zod.z.string().min(6, "Password must be at least 6 characters")
+  password: zod.z.string().min(6, "Password must be at least 6 characters"),
+  role: zod.z.enum(["USER", "AGENT"])
 });
 var loginController = async (req, res) => {
   SignUpSchema.parse(req.body);
-  const { email, password, name } = req.body;
+  const { email, password } = req.body;
   if (!email || !password) {
     throw new BadRequest(
       "Email and password are required",
@@ -199,7 +198,7 @@ loginRouter.post("/login", ErrorHandler(loginController));
 var routes_default2 = loginRouter;
 var Signup = async (req, res) => {
   SignUpSchema.parse(req.body);
-  const { email, password, name, role } = req.body;
+  const { name, email, password, role } = req.body;
   const user = await prisma.user.findFirst({
     where: { email }
   });
@@ -383,8 +382,7 @@ var routes_default4 = mainRouter;
 // src/index.ts
 var app = express__default.default();
 var cors = __require("cors");
-app.use(cors());
-app.use(axios__default.default);
+app.use(cors({ origin: "*" }));
 app.use(express__default.default.json());
 var prisma = new client.PrismaClient();
 app.use("/api", routes_default4);

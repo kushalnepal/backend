@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["mongodb"]
+  previewFeatures = ["mongoDb"]
 }
 
 datasource db {
@@ -8,28 +8,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//In mongo db model point to collection
+enum Role {
+  ADMIN
+  USER
+}
+
+model product {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String   @map("product_name")
+  price       Float    @map("price")
+  tags        String   @map("tags ")
+  description String   @map("description")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model user {
-  id        String   @id @default(cuid()) @map("_id") @db.ObjectId()
+  id        String   @id @default(cuid()) @map("_id")
   name      String
   email     String   @unique
   password  String
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model product {
-  id          String   @id @default(cuid()) @map("_id")
-  name        String
-  price       Float
-  tags        String
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-enum Role {
-  ADMIN
-  USER
 }
