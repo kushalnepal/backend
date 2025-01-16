@@ -1,5 +1,5 @@
 import { Router } from "express";
-import loginAuth from "./auth/login-authentication/routes";
+
 import loginRouter from "./auth/login/routes";
 import signupRouter from "./auth/signup/routes";
 import CreateProductRouter from "./products/CreateProduct/router";
@@ -12,7 +12,6 @@ const mainRouter = Router();
 
 mainRouter.use("/auth", loginRouter);
 mainRouter.use("/auth", signupRouter);
-mainRouter.use("/auth", loginAuth);
 mainRouter.use("/products", CreateProductRouter);
 mainRouter.use("/products", DeleteProductRouter);
 mainRouter.use("/products", GetProductByIdRouter);
