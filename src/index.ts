@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import express from "express";
+import express, { Request, Response } from "express";
 import { errormiddleware } from "./features/Middleware/errors";
 import mainRouter from "./features/routes";
 import { Port } from "./secret";
@@ -15,11 +15,12 @@ export const prisma = new PrismaClient();
 
 app.use("/api", mainRouter);
 
-app.use(errormiddleware);
-
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
+  const data = req.body;
   return res.send("I am ative and running well");
 });
+
+app.use(errormiddleware);
 
 app.listen(Port, () => {
   console.log(`Server is running on port ${Port}`);

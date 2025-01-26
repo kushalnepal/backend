@@ -17,6 +17,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      '@types/node':
+        specifier: ^22.10.10
+        version: 22.10.10
       axios:
         specifier: ^1.7.9
         version: 1.7.9

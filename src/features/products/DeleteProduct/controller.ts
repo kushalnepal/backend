@@ -8,7 +8,7 @@ export const DeleteProduct = async (req: Request, res: Response) => {
   try {
     const product = req.body;
     const deleteProduct = await prisma.product.delete({
-      where: { id: +req.params.id }, //+ means number type
+      where: { id: req.params.id },
     });
     res.json({
       ...deleteProduct,

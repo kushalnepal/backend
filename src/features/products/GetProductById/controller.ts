@@ -8,7 +8,7 @@ export const GetProductById = async (req: Request, res: Response) => {
     const product = req.body;
     const prisma = new PrismaClient();
     const getproduct = await prisma.product.findFirst({
-      where: { id: Number(req.params.id) },
+      where: { id: req.params.id },
     });
     res.json({
       ...product,

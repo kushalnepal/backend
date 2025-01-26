@@ -11,7 +11,7 @@ export const UpdateProduct = async (req: Request, res: Response) => {
     }
     const prisma = new PrismaClient();
     const updateproduct = await prisma.product.update({
-      where: { id: Number(req.params.id) },
+      where: { id: req.params.id },
       data: product,
     });
     res.json(updateproduct);
