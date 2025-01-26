@@ -7,7 +7,7 @@ import { Port } from "./secret";
 const app = express();
 const cors = require("cors");
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: true, withCredentials: true }));
 
 app.use(express.json());
 
