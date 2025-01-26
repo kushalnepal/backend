@@ -1,10 +1,9 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -15,9 +14,9 @@ enum Role {
 
 model product {
   id          String   @id @default(cuid()) @map("_id")
-  name        String   @map("product_name")
-  price       Float    @map("price")
-  tags        String   @map("tags ")
+  name        String
+  price       Float
+  tags        String
   description String   @map("description")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
