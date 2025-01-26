@@ -17,6 +17,10 @@ app.use("/api", mainRouter);
 
 app.use(errormiddleware);
 
+app.get("/", (req, res) => {
+  return res.send("I am ative and running well");
+});
+
 app.listen(Port, () => {
   console.log(`Server is running on port ${Port}`);
 
