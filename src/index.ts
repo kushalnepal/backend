@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import express, { Request, Response } from "express";
+import express from "express";
 import { errormiddleware } from "./features/Middleware/errors";
 import mainRouter from "./features/routes";
 import { Port } from "./secret";
@@ -14,11 +14,6 @@ app.use(express.json());
 export const prisma = new PrismaClient();
 
 app.use("/api", mainRouter);
-
-app.get("/", (req: Request, res: Response) => {
-  const data = req.body;
-  return res.send("I am ative and running well");
-});
 
 app.use(errormiddleware);
 
