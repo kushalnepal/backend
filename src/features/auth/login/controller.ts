@@ -1,7 +1,6 @@
 import { BadRequest } from "@/features/Exception/bad-request";
 import { NotFoundException } from "@/features/Exception/notfound-exception";
 import { ErrorCodes } from "@/features/Exception/root";
-import { SignUpSchema } from "@/features/Schema/SignUpSchema";
 import { prisma } from "@/index";
 import { JWT_SECRET } from "@/secret";
 import { compareSync } from "bcrypt";
@@ -12,7 +11,6 @@ export const loginController = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  SignUpSchema.parse(req.body);
   const { email, password } = req.body;
 
   if (!email || !password) {
