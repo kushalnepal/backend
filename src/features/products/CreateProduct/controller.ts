@@ -17,6 +17,7 @@ export const getProducts = async (req: Request, res: Response) => {
       name: createProducts.name,
       description: createProducts.description,
       price: createProducts.price,
+      image: createProducts.image,
       tags: createProducts.tags,
     },
   });

@@ -18,6 +18,7 @@ model product {
   price       Float
   tags        String
   description String   @map("description")
+  image       Bytes?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
