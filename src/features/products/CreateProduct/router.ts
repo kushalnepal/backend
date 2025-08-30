@@ -11,6 +11,7 @@ const CreateProductRouter = Router();
 CreateProductRouter.post(
   "/createproduct",
   [AuthMiddleware, AdminMiddleware],
+  upload.single("image"),
   ErrorHandler(createProduct)
 );
 export default CreateProductRouter;

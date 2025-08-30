@@ -10,41 +10,59 @@ export const AuthMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  // 1. Extract token from Authorization header
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    next(
-      new UnauthorizedException("Token not found", ErrorCodes.TOKEN_NOT_FOUND)
-    );
-    return;
-  }
-
-  // 2. Split "Bearer <token>" and take only the token
-  const token = authHeader.split(" ")[1];
-
   try {
-    // 3. Verify the token
-    const payload = jwt.verify(token as string, JWT_SECRET) as any;
+    const authHeader = req.headers.authorization;
 
-    // 4. Get user from payload
+    if (!authHeader) {
+      console.log("Auth Header missing");
+      return next(
+        new UnauthorizedException("Token not found", ErrorCodes.TOKEN_NOT_FOUND)
+      );
+    }
+
+    // Handle both "Bearer <token>" and raw token
+    const token = authHeader.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : authHeader;
+
+    if (!token) {
+      console.log("Token missing after Bearer");
+      return next(
+        new UnauthorizedException("Token not found", ErrorCodes.TOKEN_NOT_FOUND)
+      );
+    }
+
+    // Verify the token
+    let payload: any;
+    try {
+      payload = jwt.verify(token, JWT_SECRET);
+    } catch (err) {
+      console.log("JWT verification failed:", err);
+      return next(
+        new UnauthorizedException("Invalid Token", ErrorCodes.TOKEN_NOT_FOUND)
+      );
+    }
+
+    // Get user from DB
     const prisma = new PrismaClient();
     const user = await prisma.user.findFirst({
       where: { id: payload.userId },
     });
 
     if (!user) {
-      next(
+      console.log("User not found for token ID:", payload.userId);
+      return next(
         new UnauthorizedException("Invalid Token", ErrorCodes.TOKEN_NOT_FOUND)
       );
-      return;
     }
 
-    // 5. Attach user to request object
+    // Attach user to request
     req.user = user;
 
     next(); // pass control to next middleware
   } catch (err) {
-    next(
+    console.log("AuthMiddleware error:", err);
+    return next(
       new UnauthorizedException("Invalid Token", ErrorCodes.TOKEN_NOT_FOUND)
     );
   }

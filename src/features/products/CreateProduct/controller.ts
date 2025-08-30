@@ -30,6 +30,7 @@ export const createProduct = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Failed to add product", error });
   }
 };
