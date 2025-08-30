@@ -2,7 +2,7 @@ import { BadRequest } from "@/features/Exception/bad-request";
 import { ErrorCodes } from "@/features/Exception/root";
 import { SignUpSchema } from "@/features/Schema/SignUpSchema";
 import { prisma } from "@/index";
-import { hashSync } from "bcrypt";
+import { hashSync } from "bcryptjs";
 import { Request, Response } from "express";
 
 export const Signup = async (req: Request, res: Response): Promise<any> => {

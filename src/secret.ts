@@ -1,6 +1,6 @@
-import dotnet from "dotenv";
+import dotenv from "dotenv";
 
-dotnet.config({ path: ".env" });
+dotenv.config({ path: ".env" });
 
-export const Port = process.env.PORT;
+export const Port = Number(process.env.PORT) || 5006;
 export const JWT_SECRET = process.env.JWT_SECRET!;

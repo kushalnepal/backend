@@ -3,7 +3,7 @@ import { NotFoundException } from "@/features/Exception/notfound-exception";
 import { ErrorCodes } from "@/features/Exception/root";
 import { prisma } from "@/index";
 import { JWT_SECRET } from "@/secret";
-import { compareSync } from "bcrypt";
+import { compareSync } from "bcryptjs";
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 

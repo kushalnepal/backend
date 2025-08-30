@@ -17,8 +17,28 @@ app.use("/api", mainRouter);
 
 app.use(errormiddleware);
 
-app.listen(Port, () => {
-  console.log(`Server is running on port ${Port}`);
+const startServer = (port: number, attempts = 3) => {
+  const server = app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+    console.log("CTR + C to exit");
+  });
 
-  console.log("CTR + C to exit");
-});
+  server.on("error", (err: any) => {
+    if (err && err.code === "EADDRINUSE") {
+      console.error(`Port ${port} is already in use.`);
+      if (attempts > 0) {
+        const nextPort = port + 1;
+        console.log(`Trying port ${nextPort}...`);
+        setTimeout(() => startServer(nextPort, attempts - 1), 500);
+      } else {
+        console.error("No available ports. Exiting.");
+        process.exit(1);
+      }
+    } else {
+      console.error("Server error:", err);
+      process.exit(1);
+    }
+  });
+};
+
+startServer(Port);

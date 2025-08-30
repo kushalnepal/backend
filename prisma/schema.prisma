@@ -32,3 +32,18 @@ model user {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+}
+
+model order {
+  id           String      @id @default(cuid()) @map("_id")
+  name         String
+  phone        String
+  orderDetails String      @map("orderDetails")
+  status       OrderStatus @default(PENDING)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
