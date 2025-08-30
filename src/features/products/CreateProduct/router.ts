@@ -1,13 +1,16 @@
 import { ErrorHandler } from "@/error-handler";
 import { Router } from "express";
+import multer from "multer";
 import { AdminMiddleware } from "../../Middleware/adminMiddleware";
 import { AuthMiddleware } from "../../Middleware/authMiddleware";
-import { getProducts } from "./controller";
+import { createProduct } from "./controller";
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const CreateProductRouter = Router();
 CreateProductRouter.post(
   "/createproduct",
   [AuthMiddleware, AdminMiddleware],
-  ErrorHandler(getProducts)
+  ErrorHandler(createProduct)
 );
 export default CreateProductRouter;

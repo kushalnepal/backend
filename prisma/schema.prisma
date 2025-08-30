@@ -16,7 +16,7 @@ model product {
   id          String   @id @default(cuid()) @map("_id")
   name        String
   price       Float
-  tags        String
+  tags        String   @default("all")
   description String   @map("description")
   image       Bytes?
   createdAt   DateTime @default(now())
