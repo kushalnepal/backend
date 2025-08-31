@@ -7,7 +7,15 @@ import { Port } from "./secret";
 const app = express();
 const cors = require("cors");
 
-app.use(cors({ origin: true, withCredentials: true }));
+// Allow requests from any origin in development; allow credentials and common headers
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 
