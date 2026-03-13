@@ -1,22 +1,22 @@
-import { BadRequest } from "@/features/Exception/bad-request";
-import { NotFoundException } from "@/features/Exception/notfound-exception";
-import { ErrorCodes } from "@/features/Exception/root";
-import { prisma } from "@/index";
-import { JWT_SECRET } from "@/secret";
 import { compareSync } from "bcryptjs";
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
+import prisma from "../../../prisma-client";
+import { JWT_SECRET } from "../../../secret";
+import { BadRequest } from "../../Exception/bad-request";
+import { NotFoundException } from "../../Exception/notfound-exception";
+import { ErrorCodes } from "../../Exception/root";
 
 export const loginController = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<any> => {
   const { email, password } = req.body;
 
   if (!email || !password) {
     throw new BadRequest(
       "Email and password are required",
-      ErrorCodes.BAD_REQUEST
+      ErrorCodes.BAD_REQUEST,
     ); //throw vanekaii generic error throw gareko
   }
   const user = await prisma.user.findFirst({

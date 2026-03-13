@@ -1,7 +1,7 @@
-import { NotFoundException } from "@/features/Exception/notfound-exception";
-import { ErrorCodes } from "@/features/Exception/root";
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
+import { InternalException } from "../../Exception/internal-exception";
+import { ErrorCodes } from "../../Exception/root";
 
 export const ListProduct = async (req: Request, res: Response) => {
   // For list product we need the concept of pagination
@@ -36,9 +36,10 @@ export const ListProduct = async (req: Request, res: Response) => {
       data: productsWithBase64,
     });
   } catch (err) {
-    throw new NotFoundException(
+    throw new InternalException(
       "Some error while finding list",
-      ErrorCodes.USER_NOT_FOUND
+      ErrorCodes.PRODUCT_NOT_FOUND,
+      err,
     );
   }
 };

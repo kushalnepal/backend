@@ -1,7 +1,7 @@
-import { ErrorHandler } from "@/error-handler";
-import { AdminMiddleware } from "@/features/Middleware/adminMiddleware";
-import { AuthMiddleware } from "@/features/Middleware/authMiddleware";
 import { Router } from "express";
+import { ErrorHandler } from "../../../error-handler";
+import { AdminMiddleware } from "../../Middleware/adminMiddleware";
+import { AuthMiddleware } from "../../Middleware/authMiddleware";
 import { UpdateProduct } from "./controller";
 
 const UpdateProductRouter = Router();
@@ -9,6 +9,6 @@ const UpdateProductRouter = Router();
 UpdateProductRouter.put(
   "/:id",
   [AuthMiddleware, AdminMiddleware],
-  ErrorHandler(UpdateProduct)
+  ErrorHandler(UpdateProduct),
 );
 export default UpdateProductRouter;

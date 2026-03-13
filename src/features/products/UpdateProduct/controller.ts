@@ -1,7 +1,7 @@
-import { NotFoundException } from "@/features/Exception/notfound-exception";
-import { ErrorCodes } from "@/features/Exception/root";
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
+import { NotFoundException } from "../../Exception/notfound-exception";
+import { ErrorCodes } from "../../Exception/root";
 
 export const UpdateProduct = async (req: Request, res: Response) => {
   try {
@@ -34,7 +34,7 @@ export const UpdateProduct = async (req: Request, res: Response) => {
     if (error?.code === "P2025") {
       throw new NotFoundException(
         "Product not found",
-        ErrorCodes.USER_NOT_FOUND
+        ErrorCodes.USER_NOT_FOUND,
       );
     }
 

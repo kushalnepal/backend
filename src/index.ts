@@ -7,14 +7,32 @@ import { Port } from "./secret";
 const app = express();
 const cors = require("cors");
 
-// Allow requests from any origin in development; allow credentials and common headers
+// Allow requests from the Vercel frontend and localhost for development
+const allowedOrigins = [
+  "https://farm-fresh-order-hub.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://localhost:8080",
+];
+
 app.use(
   cors({
-    origin: true,
+    origin: function (
+      origin: string | undefined,
+      callback: (err: Error | null, allow?: boolean) => void,
+    ) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      // Also allow if origin is in the allowedOrigins list
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"), false);
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+  }),
 );
 
 app.use(express.json());

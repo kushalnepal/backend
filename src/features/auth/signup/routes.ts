@@ -1,5 +1,5 @@
-import { ErrorHandler } from "@/error-handler";
 import { Router } from "express";
+import { ErrorHandler } from "../../../error-handler";
 import { Signup } from "./controller";
 
 const signupRouter = Router();

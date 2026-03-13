@@ -1,7 +1,7 @@
-import { NotFoundException } from "@/features/Exception/notfound-exception";
-import { ErrorCodes } from "@/features/Exception/root";
-import { prisma } from "@/index";
 import { Request, Response } from "express";
+import prisma from "../../prisma-client";
+import { NotFoundException } from "../Exception/notfound-exception";
+import { ErrorCodes } from "../Exception/root";
 
 export const listUsers = async (req: Request, res: Response) => {
   try {
@@ -22,7 +22,7 @@ export const listUsers = async (req: Request, res: Response) => {
   } catch (err) {
     throw new NotFoundException(
       "Some error while fetching users",
-      ErrorCodes.USER_NOT_FOUND
+      ErrorCodes.USER_NOT_FOUND,
     );
   }
 };

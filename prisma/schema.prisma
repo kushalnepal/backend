@@ -19,6 +19,7 @@ model product {
   tags        String   @default("all")
   description String   @map("description")
   image       Bytes?
+  inStock     Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

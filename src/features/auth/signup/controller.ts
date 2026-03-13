@@ -1,9 +1,11 @@
-import { BadRequest } from "@/features/Exception/bad-request";
-import { ErrorCodes } from "@/features/Exception/root";
-import { SignUpSchema } from "@/features/Schema/SignUpSchema";
-import { prisma } from "@/index";
 import { hashSync } from "bcryptjs";
 import { Request, Response } from "express";
+import * as jwt from "jsonwebtoken";
+import prisma from "../../../prisma-client";
+import { JWT_SECRET } from "../../../secret";
+import { BadRequest } from "../../Exception/bad-request";
+import { ErrorCodes } from "../../Exception/root";
+import { SignUpSchema } from "../../Schema/SignUpSchema";
 
 export const Signup = async (req: Request, res: Response): Promise<any> => {
   SignUpSchema.parse(req.body);
@@ -22,29 +24,20 @@ export const Signup = async (req: Request, res: Response): Promise<any> => {
       role,
     },
   });
-  // console.log("user created", Userdata);
-  return res.send(Userdata);
-  //  catch (err: any) {
-  //   if (err.name === "ZodError") {
-  //     // Handle Zod validation error
-  //     return next(
-  //       new UnProcessableEntity(
-  //         422,
-  //         "Validation failed",
-  //         ErrorCodes.UNPROCESSABLE_ENTITY,
-  //         err.errors // Zod's error details
-  //       )
-  //     );
-  //   }
 
-  //   // Handle other errors
-  //   return next(
-  //     new UnProcessableEntity(
-  //       500,
-  //       "Internal server error",
-  //       ErrorCodes.INTERNAL_SERVER_ERROR,
-  //       err?.issues
-  //     )
-  //   );
-  // }
+  // Generate JWT token for the new user
+  const token = jwt.sign({ userId: Userdata.id }, JWT_SECRET, {
+    expiresIn: "1h",
+  });
+
+  return res.status(201).json({
+    message: "Signup successful",
+    user: {
+      id: Userdata.id,
+      email: Userdata.email,
+      name: Userdata.name,
+      role: Userdata.role,
+    },
+    token,
+  });
 };

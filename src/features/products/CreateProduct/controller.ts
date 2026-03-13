@@ -1,5 +1,5 @@
-import { prisma } from "@/index";
 import { Request, Response } from "express";
+import prisma from "../../../prisma-client";
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
@@ -31,6 +31,6 @@ export const createProduct = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Failed to add product", error });
+    res.status(500).json({ message: "Failed to add product ..", error });
   }
 };

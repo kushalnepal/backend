@@ -1,6 +1,6 @@
-import { ErrorHandler } from "@/error-handler";
 import { Router } from "express";
 import multer from "multer";
+import { ErrorHandler } from "../../../error-handler";
 import { AdminMiddleware } from "../../Middleware/adminMiddleware";
 import { AuthMiddleware } from "../../Middleware/authMiddleware";
 import { createProduct } from "./controller";
@@ -12,6 +12,6 @@ CreateProductRouter.post(
   "/createproduct",
   [AuthMiddleware, AdminMiddleware],
   upload.single("image"),
-  ErrorHandler(createProduct)
+  ErrorHandler(createProduct),
 );
 export default CreateProductRouter;

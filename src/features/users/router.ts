@@ -1,5 +1,5 @@
-import { ErrorHandler } from "@/error-handler";
 import { Router } from "express";
+import { ErrorHandler } from "../../error-handler";
 import { AdminMiddleware } from "../Middleware/adminMiddleware";
 import { AuthMiddleware } from "../Middleware/authMiddleware";
 import { listUsers } from "./controller";

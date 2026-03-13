@@ -1,5 +1,5 @@
-import { ErrorHandler } from "@/error-handler";
 import { Router } from "express";
+import { ErrorHandler } from "../../../error-handler";
 import { ListProduct } from "./controller";
 
 const ListProductRouter = Router();

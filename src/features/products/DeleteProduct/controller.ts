@@ -1,7 +1,7 @@
-import { NotFoundException } from "@/features/Exception/notfound-exception";
-import { ErrorCodes } from "@/features/Exception/root";
-import { prisma } from "@/index";
 import { Request, Response } from "express";
+import prisma from "../../../prisma-client";
+import { NotFoundException } from "../../Exception/notfound-exception";
+import { ErrorCodes } from "../../Exception/root";
 
 export const DeleteProduct = async (req: Request, res: Response) => {
   //   const { name, description, price, tags } = req.body;
